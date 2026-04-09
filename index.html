@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BNI Futurz — Passport to Success</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #CC0000;
+    --red-dark: #A00000;
+    --red-deep: #7A0000;
+    --red-glow: rgba(204,0,0,0.15);
+    --red-soft: rgba(204,0,0,0.07);
+    --white: #FFFFFF;
+    --off-white: #F7F7F7;
+    --light: #EBEBEB;
+    --mid: #CCCCCC;
+    --muted: #888888;
+    --dark-text: #1A1A1A;
+    --bg: #F5F5F5;
+    --surface: #FFFFFF;
+    --surface2: #F0F0F0;
+    --border: #E0E0E0;
+    --border-red: rgba(204,0,0,0.2);
+    --success: #1A7F3C;
+    --success-bg: #E8F5ED;
+    --warn: #B85C00;
+    --warn-bg: #FFF3E0;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    --shadow-red: 0 4px 20px rgba(204,0,0,0.18);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{font-size:16px;scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark-text);min-height:100vh;overflow-x:hidden;}
+
+  /* ===== SPLASH / LOGIN ===== */
+  #splash{
+    position:fixed;inset:0;z-index:1000;
+    background:var(--white);
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    padding:24px;
+    transition:opacity 0.4s ease;
+  }
+  #splash.hidden{opacity:0;pointer-events:none;}
+  .bni-logo-splash{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(5rem,16vw,8rem);
+    color:var(--red);
+    letter-spacing:-3px;
+    line-height:1;
+    text-shadow:5px 5px 0 rgba(0,0,0,0.06);
+  }
+  .splash-chapter{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(1.3rem,5vw,2rem);
+    color:var(--dark-text);
+    letter-spacing:4px;
+    margin-bottom:3px;
+  }
+  .splash-tagline{
+    font-size:0.72rem;letter-spacing:3px;
+    text-transform:uppercase;color:var(--muted);
+    margin-bottom:36px;
+  }
+  .splash-bar{width:48px;height:3px;background:var(--red);margin:0 auto 32px;border-radius:2px;}
+
+  .login-card{
+    background:var(--white);
+    border:1.5px solid var(--border);
+    border-top:4px solid var(--red);
+    border-radius:16px;
+    padding:32px;
+    width:100%;max-width:420px;
+    box-shadow:var(--shadow);
+  }
+  .tab-row{
+    display:flex;gap:0;
+    background:var(--surface2);
+    border-radius:var(--radius-sm);
+    padding:4px;margin-bottom:26px;
+    border:1px solid var(--border);
+  }
+  .tab-btn{
+    flex:1;padding:10px;
+    background:transparent;border:none;border-radius:6px;
+    color:var(--muted);
+    font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;
+    cursor:pointer;transition:all 0.2s;
+  }
+  .tab-btn.active{background:var(--red);color:var(--white);box-shadow:0 2px 8px rgba(204,0,0,0.3);}
+
+  .form-group{margin-bottom:16px;}
+  .form-group label{
+    display:block;font-size:0.7rem;
+    letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--muted);margin-bottom:7px;font-weight:700;
+  }
+  .form-group input,.form-group select,.form-group textarea{
+    width:100%;padding:11px 14px;
+    background:var(--off-white);
+    border:1.5px solid var(--border);
+    border-radius:var(--radius-sm);
+    color:var(--dark-text);
+    font-family:'DM Sans',sans-serif;font-size:0.93rem;
+    outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+    -webkit-appearance:none;appearance:none;
+  }
+  .form-group input:focus,.form-group select:focus{
+    border-color:var(--red);
+    box-shadow:0 0 0 3px var(--red-glow);
+    background:var(--white);
+  }
+  .form-group select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;
+  }
+  .form-group select option{background:#fff;color:var(--dark-text);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    gap:8px;padding:12px 24px;
+    border:none;border-radius:var(--radius-sm);
+    font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:700;
+    cursor:pointer;transition:all 0.2s;text-decoration:none;letter-spacing:0.3px;
+  }
+  .btn-red{background:var(--red);color:var(--white);width:100%;box-shadow:0 3px 12px rgba(204,0,0,0.25);}
+  .btn-red:hover{background:var(--red-dark);transform:translateY(-1px);box-shadow:0 5px 16px rgba(204,0,0,0.35);}
+  .btn-outline{background:transparent;color:var(--dark-text);border:1.5px solid var(--border);}
+  .btn-outline:hover{border-color:var(--red);color:var(--red);}
+  .error-msg{color:var(--red);font-size:0.82rem;margin-top:12px;text-align:center;min-height:20px;font-weight:600;}
+
+  /* ===== MAIN APP ===== */
+  #app{display:none;min-height:100vh;flex-direction:column;}
+  #app.visible{display:flex;}
+
+  /* NAV */
+  .navbar{
+    position:sticky;top:0;z-index:100;
+    background:var(--red);
+    padding:0 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    height:56px;
+    box-shadow:0 3px 16px rgba(204,0,0,0.35);
+  }
+  .nav-left{display:flex;align-items:center;gap:12px;}
+  .nav-bni{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--white);letter-spacing:1px;line-height:1;}
+  .nav-sep{width:1px;height:26px;background:rgba(255,255,255,0.25);}
+  .nav-info{display:flex;flex-direction:column;}
+  .nav-chapter{font-size:0.78rem;font-weight:700;color:var(--white);letter-spacing:0.5px;}
+  .nav-sub{font-size:0.6rem;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;}
+  .nav-right{display:flex;align-items:center;gap:10px;}
+  .nav-user{font-size:0.82rem;color:rgba(255,255,255,0.85);display:none;font-weight:500;}
+  @media(min-width:480px){.nav-user{display:block;}}
+  .nav-logout{
+    background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);
+    color:rgba(255,255,255,0.9);padding:6px 14px;border-radius:6px;
+    font-size:0.78rem;cursor:pointer;font-weight:700;
+    font-family:'DM Sans',sans-serif;transition:all 0.2s;
+  }
+  .nav-logout:hover{background:rgba(255,255,255,0.28);}
+
+  .page-wrap{flex:1;padding:20px;max-width:1100px;margin:0 auto;width:100%;}
+
+  /* ===== USER HEADER ===== */
+  .user-header{
+    background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);
+    border-radius:16px;padding:24px 28px;margin-bottom:20px;
+    display:flex;flex-wrap:wrap;gap:16px;
+    align-items:center;justify-content:space-between;
+    box-shadow:var(--shadow-red);position:relative;overflow:hidden;
+  }
+  .user-header::before{
+    content:'BNI';position:absolute;right:-8px;top:-18px;
+    font-family:'Bebas Neue',sans-serif;font-size:8rem;
+    color:rgba(255,255,255,0.05);pointer-events:none;line-height:1;letter-spacing:-4px;
+  }
+  .user-welcome h2{
+    font-family:'Bebas Neue',sans-serif;font-size:1.9rem;
+    color:var(--white);letter-spacing:1px;margin-bottom:4px;line-height:1;
+  }
+  .user-welcome p{color:rgba(255,255,255,0.72);font-size:0.83rem;}
+  .progress-ring-wrap{position:relative;width:86px;height:86px;flex-shrink:0;}
+  .progress-ring-wrap svg{transform:rotate(-90deg);}
+  .ring-bg{fill:none;stroke:rgba(255,255,255,0.18);stroke-width:6;}
+  .ring-fg{fill:none;stroke:var(--white);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 0.6s ease;}
+  .ring-label{
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;color:var(--white);
+  }
+  .ring-pct{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;line-height:1;}
+  .ring-sub{font-size:0.52rem;color:rgba(255,255,255,0.65);font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+
+  /* WEEK SECTIONS */
+  .week-section{margin-bottom:10px;}
+  .week-header{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 16px;
+    background:var(--white);
+    border:1.5px solid var(--border);
+    border-left:4px solid var(--red);
+    border-radius:var(--radius);
+    cursor:pointer;user-select:none;
+    transition:all 0.2s;box-shadow:var(--shadow);
+  }
+  .week-header:hover{box-shadow:var(--shadow-red);border-color:var(--border-red);}
+  .week-badge{
+    background:var(--red);color:var(--white);
+    padding:3px 9px;border-radius:20px;
+    font-size:0.66rem;font-weight:700;
+    letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap;
+    font-family:'Bebas Neue',sans-serif;font-size:0.78rem;
+  }
+  .week-badge.wk-open{background:var(--dark-text);}
+  .week-title{flex:1;font-weight:600;font-size:0.88rem;color:var(--dark-text);}
+  .week-count{font-size:0.75rem;color:var(--muted);white-space:nowrap;font-weight:600;}
+  .week-bar{height:4px;background:var(--light);border-radius:2px;flex:0 0 60px;overflow:hidden;display:none;}
+  @media(min-width:460px){.week-bar{display:block;}}
+  .week-bar-fill{height:100%;background:var(--red);border-radius:2px;transition:width 0.4s;}
+  .week-chev{color:var(--muted);transition:transform 0.3s;font-size:0.8rem;}
+  .week-section.open .week-chev{transform:rotate(180deg);}
+  .week-body{display:none;padding:3px 0;}
+  .week-section.open .week-body{display:block;}
+
+  /* TASK CARDS */
+  .task-card{
+    background:var(--white);
+    border:1.5px solid var(--border);
+    border-left:3px solid var(--border);
+    border-radius:0 var(--radius) var(--radius) 0;
+    margin:6px 0 6px 10px;
+    transition:border-color 0.2s,box-shadow 0.2s;
+    overflow:hidden;
+  }
+  .task-card.done{border-left-color:var(--success);}
+  .task-card.late{border-left-color:var(--warn);}
+  .task-card:hover{box-shadow:var(--shadow);}
+
+  .task-header{
+    display:flex;align-items:flex-start;gap:12px;
+    padding:13px 16px;cursor:pointer;
+  }
+  .task-num{
+    width:34px;height:34px;border-radius:8px;
+    background:var(--red-soft);border:1.5px solid var(--border-red);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Bebas Neue',sans-serif;font-size:0.9rem;font-weight:400;
+    color:var(--red);flex-shrink:0;margin-top:1px;letter-spacing:0.3px;
+  }
+  .task-card.done .task-num{background:var(--success-bg);border-color:var(--success);color:var(--success);}
+  .task-card.late .task-num{background:var(--warn-bg);border-color:var(--warn);color:var(--warn);}
+
+  .task-info{flex:1;min-width:0;}
+  .task-label-row{
+    display:flex;align-items:center;gap:6px;margin-bottom:2px;
+  }
+  .task-id-chip{
+    font-size:0.62rem;font-weight:800;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--red);
+  }
+  .task-wk-chip{
+    font-size:0.6rem;font-weight:600;color:var(--muted);
+    background:var(--surface2);padding:1px 6px;border-radius:8px;
+    border:1px solid var(--border);
+  }
+  .task-name{font-size:0.9rem;font-weight:700;color:var(--dark-text);margin-bottom:2px;line-height:1.3;}
+  .task-person{font-size:0.8rem;color:var(--muted);font-weight:500;margin-bottom:5px;}
+  .task-meta{display:flex;flex-wrap:wrap;gap:6px;font-size:0.72rem;color:var(--muted);align-items:center;}
+  .task-badge{padding:2px 8px;border-radius:10px;font-size:0.67rem;font-weight:700;letter-spacing:0.3px;}
+  .badge-done{background:var(--success-bg);color:var(--success);}
+  .badge-late{background:var(--warn-bg);color:var(--warn);}
+  .badge-pending{background:var(--surface2);color:var(--muted);}
+  .badge-overdue{background:rgba(204,0,0,0.08);color:var(--red);}
+  .task-expand{color:var(--muted);font-size:0.72rem;transition:transform 0.2s;flex-shrink:0;margin-top:8px;}
+  .task-card.open .task-expand{transform:rotate(180deg);}
+
+  .task-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border);}
+  .task-card.open .task-body{display:block;}
+  .task-body-inner{padding-top:14px;display:flex;flex-direction:column;gap:14px;}
+
+  .field-label{font-size:0.68rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  .toggle-group{display:flex;gap:0;border-radius:var(--radius-sm);overflow:hidden;border:1.5px solid var(--border);width:fit-content;}
+  .toggle-opt{
+    padding:9px 20px;border:none;
+    background:var(--surface2);color:var(--muted);
+    font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:700;
+    cursor:pointer;transition:all 0.15s;
+  }
+  .toggle-opt:first-child{border-right:1px solid var(--border);}
+  .toggle-opt.active-yes{background:var(--success);color:var(--white);}
+  .toggle-opt.active-no{background:var(--surface2);color:var(--muted);}
+
+  .date-row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;}
+  .date-row .form-group{margin:0;flex:1;min-width:160px;}
+
+  .photo-upload-area{
+    border:2px dashed var(--border);border-radius:var(--radius-sm);
+    padding:14px;text-align:center;cursor:pointer;
+    transition:border-color 0.2s,background 0.2s;
+    position:relative;background:var(--off-white);
+  }
+  .photo-upload-area:hover{border-color:var(--red);background:var(--white);}
+  .photo-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+  .photo-upload-area .uico{font-size:1.3rem;margin-bottom:4px;}
+  .photo-upload-area p{font-size:0.76rem;color:var(--muted);}
+  .photo-preview{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;align-items:center;}
+  .photo-thumb{position:relative;width:56px;height:56px;border-radius:6px;overflow:hidden;border:1.5px solid var(--border);}
+  .photo-thumb img{width:100%;height:100%;object-fit:cover;}
+  .drive-link{font-size:0.76rem;color:var(--red);word-break:break-all;text-decoration:underline;}
+
+  .save-task-btn{
+    align-self:flex-start;padding:10px 22px;
+    background:var(--red);color:var(--white);
+    border:none;border-radius:var(--radius-sm);
+    font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:800;
+    cursor:pointer;transition:all 0.2s;
+    box-shadow:0 2px 8px rgba(204,0,0,0.2);letter-spacing:0.3px;
+  }
+  .save-task-btn:hover{background:var(--red-dark);transform:translateY(-1px);}
+
+  /* ===== ADMIN ===== */
+  .admin-hero{
+    background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);
+    border-radius:16px;padding:22px 26px;margin-bottom:20px;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    box-shadow:var(--shadow-red);position:relative;overflow:hidden;
+  }
+  .admin-hero::before{
+    content:'ADMIN';position:absolute;right:-6px;top:-14px;
+    font-family:'Bebas Neue',sans-serif;font-size:5rem;
+    color:rgba(255,255,255,0.05);pointer-events:none;letter-spacing:4px;line-height:1;
+  }
+  .admin-hero h1{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--white);letter-spacing:1px;}
+  .admin-hero p{color:rgba(255,255,255,0.65);font-size:0.8rem;margin-top:2px;}
+
+  .admin-tabs{
+    display:flex;gap:0;flex-wrap:wrap;
+    background:var(--white);border:1.5px solid var(--border);
+    border-radius:var(--radius);padding:4px;
+    margin-bottom:20px;box-shadow:var(--shadow);
+  }
+  .admin-tab{
+    padding:9px 16px;background:transparent;border:none;
+    color:var(--muted);font-family:'DM Sans',sans-serif;
+    font-size:0.82rem;font-weight:700;
+    cursor:pointer;border-radius:8px;
+    transition:all 0.2s;white-space:nowrap;
+  }
+  .admin-tab.active{background:var(--red);color:var(--white);box-shadow:0 2px 8px rgba(204,0,0,0.25);}
+  .admin-panel{display:none;}
+  .admin-panel.active{display:block;}
+
+  .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px;}
+  .stat-card{
+    background:var(--white);border:1.5px solid var(--border);
+    border-radius:var(--radius);padding:18px;text-align:center;
+    box-shadow:var(--shadow);position:relative;overflow:hidden;
+  }
+  .stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--red);}
+  .stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--red);line-height:1;}
+  .stat-label{font-size:0.66rem;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+
+  .admin-table-wrap{overflow-x:auto;border-radius:var(--radius);border:1.5px solid var(--border);box-shadow:var(--shadow);background:var(--white);}
+  table{width:100%;border-collapse:collapse;}
+  thead th{
+    background:var(--red);color:var(--white);
+    padding:10px 13px;text-align:left;
+    font-size:0.67rem;letter-spacing:1px;text-transform:uppercase;font-weight:700;white-space:nowrap;
+  }
+  tbody tr{border-bottom:1px solid var(--border);transition:background 0.15s;}
+  tbody tr:last-child{border:none;}
+  tbody tr:hover{background:var(--off-white);}
+  tbody td{padding:10px 13px;font-size:0.82rem;vertical-align:middle;}
+  .tbl-badge{padding:2px 8px;border-radius:20px;font-size:0.67rem;font-weight:700;white-space:nowrap;}
+
+  .timeline-search{display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+  .timeline-search input{
+    flex:1;min-width:200px;padding:10px 14px;
+    background:var(--white);border:1.5px solid var(--border);
+    border-radius:var(--radius-sm);color:var(--dark-text);
+    font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;box-shadow:var(--shadow);
+  }
+  .timeline-search input:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--red-glow);}
+
+  .tl-user-block{
+    background:var(--white);border:1.5px solid var(--border);
+    border-radius:var(--radius);margin-bottom:10px;
+    overflow:hidden;box-shadow:var(--shadow);
+  }
+  .tl-user-header{
+    padding:14px 18px;
+    display:flex;flex-wrap:wrap;gap:10px;
+    align-items:center;justify-content:space-between;
+    cursor:pointer;user-select:none;
+    border-left:4px solid var(--red);
+  }
+  .tl-user-name{font-weight:700;font-size:0.93rem;color:var(--dark-text);}
+  .tl-user-stats{display:flex;gap:8px;flex-wrap:wrap;font-size:0.76rem;}
+  .tl-body{display:none;padding:0 18px 14px;border-top:1px solid var(--border);}
+  .tl-user-block.open .tl-body{display:block;}
+
+  .tl-item{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--off-white);align-items:flex-start;}
+  .tl-item:last-child{border:none;}
+  .tl-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+  .tl-dot.done{background:var(--success);}
+  .tl-dot.late{background:var(--warn);}
+  .tl-dot.pending{background:var(--light);border:1.5px solid var(--border);}
+  .tl-content{flex:1;}
+  .tl-tid{font-size:0.62rem;font-weight:800;color:var(--red);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:1px;}
+  .tl-tname{font-size:0.84rem;font-weight:700;color:var(--dark-text);margin-bottom:1px;}
+  .tl-tperson{font-size:0.77rem;color:var(--muted);margin-bottom:2px;}
+  .tl-meta{font-size:0.73rem;color:var(--muted);}
+  .tl-drive{font-size:0.72rem;color:var(--red);margin-top:2px;}
+
+  .section-heading{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--red);margin-bottom:14px;letter-spacing:1px;}
+  .chip{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:0.68rem;font-weight:700;background:var(--red-soft);color:var(--red);border:1px solid var(--border-red);}
+
+  .export-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
+
+  .toast-wrap{position:fixed;bottom:22px;right:22px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
+  .toast{
+    background:var(--white);border:1.5px solid var(--border);
+    border-left:4px solid var(--red);
+    padding:11px 16px;border-radius:var(--radius-sm);
+    font-size:0.82rem;box-shadow:var(--shadow);
+    animation:slideIn 0.3s ease;pointer-events:auto;max-width:280px;
+    color:var(--dark-text);font-weight:600;
+  }
+  .toast.success{border-left-color:var(--success);}
+  @keyframes slideIn{from{opacity:0;transform:translateX(28px);}to{opacity:1;transform:translateX(0);}}
+
+  ::-webkit-scrollbar{width:5px;height:5px;}
+  ::-webkit-scrollbar-track{background:var(--off-white);}
+  ::-webkit-scrollbar-thumb{background:var(--light);border-radius:3px;}
+
+  .text-red{color:var(--red);}
+  .text-muted{color:var(--muted);}
+  .text-success{color:var(--success);}
+  .text-warn{color:var(--warn);}
+
+  @media(max-width:580px){
+    .page-wrap{padding:12px;}
+    .login-card{padding:22px;}
+    .user-header{padding:18px;}
+    thead th,tbody td{padding:8px 10px;}
+    .task-card{margin-left:0;}
+    .week-header{padding:10px 13px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- SPLASH / LOGIN -->
+<div id="splash">
+  <img src="BNI.png" alt="BNI" style="height:clamp(80px,20vw,130px);object-fit:contain;margin-bottom:4px;">
+  <div class="splash-chapter">Futurz Chapter</div>
+  <div class="splash-tagline">Passport to Success · Raipur</div>
+  <div class="splash-bar"></div>
+
+  <div class="login-card">
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchLoginTab('user')">Member Login</button>
+      <button class="tab-btn" onclick="switchLoginTab('admin')">Admin</button>
+    </div>
+    <div id="user-login-form">
+      <div class="form-group">
+        <label>Login ID — Your First Name</label>
+        <input type="text" id="user-id-input" placeholder="e.g. Rahul" autocapitalize="words" onkeydown="if(event.key==='Enter')loginUser()">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="user-pass-input" placeholder="Enter your password" onkeydown="if(event.key==='Enter')loginUser()">
+      </div>
+      <button class="btn btn-red" onclick="loginUser()">Enter Portal →</button>
+    </div>
+    <div id="admin-login-form" style="display:none">
+      <div class="form-group">
+        <label>Admin Password</label>
+        <input type="password" id="admin-pass-input" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')loginAdmin()">
+      </div>
+      <button class="btn btn-red" onclick="loginAdmin()">Admin Access →</button>
+    </div>
+    <div class="error-msg" id="login-error"></div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <nav class="navbar">
+    <div class="nav-left">
+      <span class="nav-bni">BNI</span>
+      <div class="nav-sep"></div>
+      <div class="nav-info">
+        <span class="nav-chapter">Futurz Chapter</span>
+        <span class="nav-sub">Passport to Success</span>
+      </div>
+    </div>
+    <div class="nav-right">
+      <span class="nav-user" id="nav-user-name"></span>
+      <button class="nav-logout" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- USER VIEW -->
+  <div id="user-view" style="display:none">
+    <div class="page-wrap">
+      <div class="user-header">
+        <div class="user-welcome">
+          <h2 id="user-greeting">Welcome</h2>
+          <p id="user-induction-info">Loading your profile…</p>
+        </div>
+        <div class="progress-ring-wrap">
+          <svg width="86" height="86" viewBox="0 0 86 86">
+            <circle class="ring-bg" cx="43" cy="43" r="36"/>
+            <circle class="ring-fg" id="prog-ring" cx="43" cy="43" r="36" stroke-dasharray="226.19" stroke-dashoffset="226.19"/>
+          </svg>
+          <div class="ring-label">
+            <span class="ring-pct" id="prog-label">0%</span>
+            <span class="ring-sub">Done</span>
+          </div>
+        </div>
+      </div>
+      <div id="tasks-container"></div>
+    </div>
+  </div>
+
+  <!-- ADMIN VIEW -->
+  <div id="admin-view" style="display:none">
+    <div class="page-wrap">
+      <div class="admin-hero">
+        <div>
+          <h1>Admin Dashboard</h1>
+          <p>BNI Futurz · Passport to Success · Full Overview</p>
+        </div>
+        <button class="btn btn-outline" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff;width:auto" onclick="renderAdminView()">↻ Refresh</button>
+      </div>
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="adminTab(this,'overview')">📊 Overview</button>
+        <button class="admin-tab" onclick="adminTab(this,'timeline')">🕐 Timeline</button>
+        <button class="admin-tab" onclick="adminTab(this,'members')">👥 Members</button>
+        <button class="admin-tab" onclick="adminTab(this,'export')">📥 Export</button>
+      </div>
+      <div id="panel-overview" class="admin-panel active"></div>
+      <div id="panel-timeline" class="admin-panel"></div>
+      <div id="panel-members" class="admin-panel"></div>
+      <div id="panel-export" class="admin-panel">
+        <div class="section-heading">Export Data</div>
+        <p class="text-muted" style="font-size:0.86rem;margin-bottom:18px">Download all member progress as Excel-compatible CSV with task names, persons &amp; timestamps.</p>
+        <div class="export-row">
+          <button class="btn btn-red" style="width:auto" onclick="exportCSV()">📊 Download CSV (Excel)</button>
+          <button class="btn btn-outline" onclick="renderAdminView()">🔄 Refresh Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+// ============================================================
+// CONFIG — set SHEET_API_URL after deploying Google Apps Script
+// ============================================================
+const SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbwUUhvH3mHRDo1ww97ARhCHxmbQzBlsMzjrZHa3H-I4K5A0bZRYbaAznFzHrsHSoJyHcg/exec';
+const ADMIN_PASSWORD = 'PrafullAdmin';
+const DEFAULT_USER_PASS = '2580';
+
+// ===== ALL 16 TASKS =====
+const TASK_DEFS = [
+  { id:1,  week:1, label:'T1',  name:'Meet Mentor',                          person:'Your assigned mentor',      type:'mentor',   dueDays:7  },
+  { id:2,  week:1, label:'T2',  name:'Meet President',                       person:'Dr. Ananya Mishra',         type:'confirm',  dueDays:7  },
+  { id:3,  week:2, label:'T3',  name:'Meet Vice President',                  person:'Mansi Chhugani',             type:'confirm',  dueDays:14 },
+  { id:4,  week:2, label:'T4',  name:'Meet Weekly Presentation Coordinator', person:'Vicky Khanuja',              type:'confirm',  dueDays:14 },
+  { id:5,  week:3, label:'T5',  name:'Meet Attendance Coordinator',          person:'Karishma Sharma',            type:'confirm',  dueDays:21 },
+  { id:6,  week:3, label:'T6',  name:'Meet Go Green Coordinator',            person:'A. Manoj Rathore',           type:'confirm',  dueDays:21 },
+  { id:7,  week:4, label:'T7',  name:'Meet One-to-One Co-Ordinator',         person:'Alok Agrawal',               type:'confirm',  dueDays:28 },
+  { id:8,  week:4, label:'T8',  name:'Meet Growth Co-Ordinator',             person:'Darshan Jhaveri',            type:'confirm',  dueDays:28 },
+  { id:9,  week:5, label:'T9',  name:'Meet Secretary Treasurer',             person:'Ayush Agrawal',              type:'confirm',  dueDays:35 },
+  { id:10, week:5, label:'T10', name:'Meet Gold Club Member',                person:'Select from list below',   type:'dropdown', options:['Vikas Ahuja','Manish Jain','Lucky Goplani','Rakesh Ahuja'], dueDays:35 },
+  { id:11, week:6, label:'T11', name:'Meet Connect Co-Ordinator',            person:'Manas Vishwakarma',          type:'confirm',  dueDays:42 },
+  { id:12, week:6, label:'T12', name:'Meet Mentor Co-Ordinator',             person:'Prafull Bothra',             type:'confirm',  dueDays:42 },
+  { id:13, week:0, label:'T13', name:'Ambassador One-to-Ones',               person:'Complete within 60 days',   type:'confirm',  dueDays:60 },
+  { id:14, week:0, label:'T14', name:'Director Consultant One-to-One',       person:'Ravi Andani',                type:'confirm',  dueDays:60 },
+  { id:15, week:0, label:'T15', name:'EMES',                                 person:'Complete within 60 days',   type:'confirm',  dueDays:60 },
+  { id:16, week:0, label:'T16', name:'MSP Training',                         person:'Complete within 60 days',   type:'confirm',  dueDays:60 },
+];
+
+const WEEK_LABELS = {
+  1:'Week 1 — President & Mentor Meetings',
+  2:'Week 2 — Leadership Meetings',
+  3:'Week 3 — Coordinator Meetings',
+  4:'Week 4 — Coordinator Meetings II',
+  5:'Week 5 — Treasurer & Gold Club',
+  6:'Week 6 — Connect & Mentor Co-Ordinator',
+  0:'Open Tasks — Complete within 60 Days'
+};
+
+let state = { mode:null, currentUser:null, users:[], taskData:{} };
+
+function loadStorage(){
+  try{ state.users=JSON.parse(localStorage.getItem('bni_users')||'[]'); state.taskData=JSON.parse(localStorage.getItem('bni_tasks')||'{}'); }catch(e){ state.users=[]; state.taskData={}; }
+  if(state.users.length===0){
+    state.users=[{id:'Demo',name:'Demo User',inductionDate:new Date(Date.now()-15*86400000).toISOString().split('T')[0]}];
+    saveUsers();
+  }
+}
+function saveUsers(){ localStorage.setItem('bni_users',JSON.stringify(state.users)); }
+function saveTaskData(){ localStorage.setItem('bni_tasks',JSON.stringify(state.taskData)); }
+
+// AUTH
+function switchLoginTab(tab){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&tab==='user')||(i===1&&tab==='admin')));
+  document.getElementById('user-login-form').style.display=tab==='user'?'':'none';
+  document.getElementById('admin-login-form').style.display=tab==='admin'?'':'none';
+  document.getElementById('login-error').textContent='';
+}
+function loginUser(){
+  const id=document.getElementById('user-id-input').value.trim();
+  const pass=document.getElementById('user-pass-input').value.trim();
+  if(!id){showErr('Please enter your login ID.');return;}
+  if(pass!==DEFAULT_USER_PASS){showErr('Incorrect password.');return;}
+  const user=state.users.find(u=>u.id.toLowerCase()===id.toLowerCase());
+  if(!user){showErr('Member not found. Contact your coordinator.');return;}
+  state.mode='user'; state.currentUser=user; enterApp();
+}
+function loginAdmin(){
+  if(document.getElementById('admin-pass-input').value!==ADMIN_PASSWORD){showErr('Incorrect admin password.');return;}
+  state.mode='admin'; enterApp();
+}
+function showErr(m){ document.getElementById('login-error').textContent=m; }
+function enterApp(){
+  document.getElementById('splash').classList.add('hidden');
+  document.getElementById('app').classList.add('visible');
+  if(state.mode==='user'){
+    document.getElementById('nav-user-name').textContent=state.currentUser.name;
+    document.getElementById('user-view').style.display='';
+    document.getElementById('admin-view').style.display='none';
+    renderUserView();
+  }else{
+    document.getElementById('nav-user-name').textContent='Administrator';
+    document.getElementById('user-view').style.display='none';
+    document.getElementById('admin-view').style.display='';
+    renderAdminView();
+  }
+}
+function logout(){
+  state.mode=null; state.currentUser=null;
+  document.getElementById('splash').classList.remove('hidden');
+  document.getElementById('app').classList.remove('visible');
+  ['user-id-input','admin-pass-input'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('login-error').textContent='';
+}
+
+// USER VIEW
+function renderUserView(){
+  const user=state.currentUser;
+  const td=state.taskData[user.id]||{};
+  const induction=new Date(user.inductionDate);
+  const daysSince=Math.floor((new Date()-induction)/86400000);
+  document.getElementById('user-greeting').textContent='Welcome, '+user.name;
+  document.getElementById('user-induction-info').textContent='Inducted: '+fmtDate(induction)+' · Day '+daysSince+' of your journey';
+  const completed=TASK_DEFS.filter(t=>td[t.id]?.done).length;
+  const pct=Math.round(completed/TASK_DEFS.length*100);
+  document.getElementById('prog-label').textContent=pct+'%';
+  const circ=226.19;
+  document.getElementById('prog-ring').style.strokeDashoffset=circ-(circ*pct/100);
+  const weeks=[...new Set(TASK_DEFS.map(t=>t.week))];
+  let html='';
+  weeks.forEach(w=>{
+    const tasks=TASK_DEFS.filter(t=>t.week===w);
+    const wDone=tasks.filter(t=>td[t.id]?.done).length;
+    const wPct=Math.round(wDone/tasks.length*100);
+    html+=`<div class="week-section" id="week-${w}">
+      <div class="week-header" onclick="toggleWeek('week-${w}')">
+        <span class="week-badge${w===0?' wk-open':''}">${w===0?'OPEN':'WK '+w}</span>
+        <span class="week-title">${WEEK_LABELS[w]}</span>
+        <div class="week-bar"><div class="week-bar-fill" style="width:${wPct}%"></div></div>
+        <span class="week-count">${wDone}/${tasks.length}</span>
+        <span class="week-chev">▼</span>
+      </div>
+      <div class="week-body">${tasks.map(t=>renderTaskCard(t,td[t.id],induction)).join('')}</div>
+    </div>`;
+  });
+  document.getElementById('tasks-container').innerHTML=html;
+}
+
+function renderTaskCard(task,data,induction){
+  const today=new Date(); today.setHours(0,0,0,0);
+  const dueDate=new Date(induction); dueDate.setDate(dueDate.getDate()+task.dueDays); dueDate.setHours(0,0,0,0);
+  const isOverdue=today>dueDate&&!data?.done;
+  const isLate=data?.done&&data?.submittedAt&&new Date(new Date(data.submittedAt).setHours(0,0,0,0))>dueDate.getTime();
+  const isDone=!!data?.done;
+  let cls='pending', badge='';
+  if(isDone&&isLate){cls='late';badge='<span class="task-badge badge-late">✓ Completed Late</span>';}
+  else if(isDone){cls='done';badge='<span class="task-badge badge-done">✓ Completed</span>';}
+  else if(isOverdue){badge='<span class="task-badge badge-overdue">⚠ Overdue</span>';}
+  else{badge='<span class="task-badge badge-pending">Pending</span>';}
+  let extra='';
+  if(isDone&&data.selectedDate) extra+=`<span>Done: ${data.selectedDate}</span>`;
+  if(data?.selectedOption) extra+=`<span>→ ${data.selectedOption}</span>`;
+  return `<div class="task-card ${cls}" id="tc-${task.id}">
+    <div class="task-header" onclick="toggleTask(${task.id})">
+      <div class="task-num">${task.label}</div>
+      <div class="task-info">
+        <div class="task-label-row">
+          <span class="task-id-chip">${task.label}</span>
+          <span class="task-wk-chip">${task.week===0?'Open':'Week '+task.week}</span>
+        </div>
+        <div class="task-name">${task.name}</div>
+        <div class="task-person">👤 ${task.type==='dropdown'?task.options.join(' / '):(task.type==='mentor'?(induction?state.currentUser?.mentor||'Mentor not assigned':task.person):task.person)}</div>
+        <div class="task-meta">${badge}<span>Due: ${fmtDate(dueDate)}</span>${extra}</div>
+      </div>
+      <span class="task-expand">▼</span>
+    </div>
+    <div class="task-body">
+      <div class="task-body-inner" id="tb-${task.id}">
+        ${task.type==='dropdown'?`
+        <div class="form-group">
+          <label>Select Person</label>
+          <select id="sel-${task.id}">
+            <option value="">— Choose a person —</option>
+            ${task.options.map(o=>`<option value="${o}"${data?.selectedOption===o?' selected':''}>${o}</option>`).join('')}
+          </select>
+        </div>`:task.type==='mentor'?`
+        <div class="form-group">
+          <label>Your Assigned Mentor</label>
+          <div style="padding:11px 14px;background:var(--off-white);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:0.93rem;color:var(--dark-text);font-weight:600;">${state.currentUser?.mentor||'Mentor not assigned — contact coordinator'}</div>
+        </div>`:''}
+        <div>
+          <div class="field-label">Have you completed this task?</div>
+          <div class="toggle-group">
+            <button class="toggle-opt${isDone?' active-yes':''}" id="yes-${task.id}" onclick="setDone(${task.id},true)">✓ Yes, Done</button>
+            <button class="toggle-opt${!isDone?' active-no':''}" id="no-${task.id}" onclick="setDone(${task.id},false)">✗ Not Yet</button>
+          </div>
+        </div>
+        <div id="done-fields-${task.id}" style="${isDone?'':'display:none'}">
+          <div class="date-row">
+            <div class="form-group">
+              <label>Date Completed</label>
+              <input type="date" id="date-${task.id}" value="${data?.selectedDate||''}" max="${new Date().toISOString().split('T')[0]}">
+            </div>
+          </div>
+          <div>
+            <div class="field-label" style="margin-bottom:8px">Upload Proof Photo</div>
+            <div class="photo-upload-area" onclick="document.getElementById('file-${task.id}').click()">
+              <input type="file" id="file-${task.id}" accept="image/*" onchange="handlePhoto(${task.id},this)" style="display:none">
+              <div class="uico">📷</div>
+              <p>Tap to select a photo</p>
+            </div>
+            <div class="photo-preview" id="preview-${task.id}">
+              ${data?.driveLink?`<a class="drive-link" href="${data.driveLink}" target="_blank">📎 View Uploaded Photo</a>`:''}
+            </div>
+          </div>
+        </div>
+        <button class="save-task-btn" onclick="saveTask(${task.id})">Save Progress ✓</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleWeek(id){ document.getElementById(id).classList.toggle('open'); }
+function toggleTask(id){ document.getElementById('tc-'+id).classList.toggle('open'); }
+function setDone(id,val){
+  document.getElementById('yes-'+id).classList.toggle('active-yes',val);
+  document.getElementById('no-'+id).classList.toggle('active-no',!val);
+  document.getElementById('done-fields-'+id).style.display=val?'':'none';
+  if(val){const d=document.getElementById('date-'+id);if(!d.value)d.value=new Date().toISOString().split('T')[0];}
+}
+
+let pendingPhotos={};
+function handlePhoto(taskId,input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    pendingPhotos[taskId]={name:file.name,dataUrl:e.target.result,mimeType:file.type};
+    document.getElementById('preview-'+taskId).innerHTML=`<div class="photo-thumb"><img src="${e.target.result}" alt="proof"></div><span style="font-size:0.73rem;color:var(--muted);align-self:center">${file.name}</span>`;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function saveTask(id){
+  const user=state.currentUser;
+  const isDone=document.getElementById('yes-'+id).classList.contains('active-yes');
+  const selectedDate=document.getElementById('date-'+id)?.value||'';
+  const sel=document.getElementById('sel-'+id);
+  const taskDef=TASK_DEFS.find(t=>t.id===id);
+  const selectedOption=taskDef?.type==='mentor'?(state.currentUser?.mentor||''):(sel?sel.value:'');
+  const task=taskDef;
+  const induction=new Date(user.inductionDate);
+  const dueDate=new Date(induction);dueDate.setDate(dueDate.getDate()+task.dueDays);
+  const now=new Date();
+  const isLate=isDone&&selectedDate&&new Date(selectedDate)>dueDate;
+  if(!state.taskData[user.id])state.taskData[user.id]={};
+
+  let driveLink=state.taskData[user.id][id]?.driveLink||'';
+
+  // Upload photo: resize to max 800px first to keep base64 small, then send via POST
+  if(pendingPhotos[id]&&SHEET_API_URL){
+    toast('Uploading photo, please wait...','');
+    try{
+      const photo=pendingPhotos[id];
+      // Resize image to max 800px to ensure URL length stays manageable
+      const resizedBase64=await resizeImage(photo.dataUrl,800);
+      const base64Data=resizedBase64.split(',')[1];
+      const mimeType=resizedBase64.split(';')[0].split(':')[1];
+      const fileName=user.id+'_T'+id+'_'+Date.now()+'.jpg';
+      const payload=JSON.stringify({
+        action:'uploadPhoto',
+        fileName,
+        base64Data,
+        mimeType
+      });
+      const resp=await fetch(SHEET_API_URL,{
+        method:'POST',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:payload
+      });
+      const result=await resp.json();
+      if(result.url)driveLink=result.url;
+    }catch(err){
+      console.warn('Photo upload failed:',err);
+    }
+  }
+
+  state.taskData[user.id][id]={
+    done:isDone,selectedDate,selectedOption,
+    driveLink,
+    submittedAt:now.toISOString(),
+    timestamp:now.toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
+    isLate,
+  };
+  saveTaskData();
+
+  if(SHEET_API_URL){
+    const d=state.taskData[user.id][id];
+    const payload=JSON.stringify({
+      action:'saveTask',
+      userId:user.id,
+      taskId:id,
+      data: {
+        done: d.done,
+        selectedDate: d.selectedDate || '',
+        selectedOption: d.selectedOption || '',
+        isLate: d.isLate,
+        submittedAt: d.submittedAt || '',
+        timestamp: d.timestamp || '',
+        driveLink: d.driveLink || ''
+      }
+    });
+    fetch(SHEET_API_URL,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:payload
+    }).catch(()=>{});
+  }
+
+  delete pendingPhotos[id];
+  renderUserView();
+  toast(isDone?(isLate?'Saved — marked as late':'Task saved successfully!'):'Progress saved.',isDone?'success':'');
+}
+
+function resizeImage(dataUrl,maxSize){
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>{
+      let w=img.width,h=img.height;
+      if(w>maxSize||h>maxSize){
+        if(w>h){h=Math.round(h*maxSize/w);w=maxSize;}
+        else{w=Math.round(w*maxSize/h);h=maxSize;}
+      }
+      const canvas=document.createElement('canvas');
+      canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      resolve(canvas.toDataURL('image/jpeg',0.7));
+    };
+    img.src=dataUrl;
+  });
+}
+
+// ADMIN
+function renderAdminView(){ renderAdminOverview(); renderTimeline(); renderMembersTable(); }
+
+function adminTab(btn,tab){
+  document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+tab).classList.add('active');
+  if(tab==='overview')renderAdminOverview();
+  if(tab==='timeline')renderTimeline();
+  if(tab==='members')renderMembersTable();
+}
+
+function renderAdminOverview(){
+  const total=state.users.length;
+  let completedAll=0,lateCount=0,totalDone=0;
+  state.users.forEach(u=>{
+    const utd=state.taskData[u.id]||{};
+    const done=TASK_DEFS.filter(t=>utd[t.id]?.done).length;
+    totalDone+=done;
+    if(done===TASK_DEFS.length)completedAll++;
+    if(Object.values(utd).some(v=>v.isLate))lateCount++;
+  });
+  const overallPct=total>0?Math.round(totalDone/(total*TASK_DEFS.length)*100):0;
+  document.getElementById('panel-overview').innerHTML=`
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-label">Total Members</div></div>
+    <div class="stat-card"><div class="stat-num">${completedAll}</div><div class="stat-label">Fully Complete</div></div>
+    <div class="stat-card"><div class="stat-num">${lateCount}</div><div class="stat-label">Have Late Tasks</div></div>
+    <div class="stat-card"><div class="stat-num">${totalDone}</div><div class="stat-label">Tasks Done Total</div></div>
+    <div class="stat-card"><div class="stat-num">${overallPct}%</div><div class="stat-label">Overall Progress</div></div>
+  </div>
+  <div class="section-heading">Task Completion Matrix</div>
+  <div class="admin-table-wrap"><table>
+    <thead><tr>
+      <th>Member</th><th>Inducted</th>
+      ${TASK_DEFS.map(t=>`<th title="${t.name} — ${t.person}">${t.label}</th>`).join('')}
+      <th>Done</th>
+    </tr></thead>
+    <tbody>
+      ${state.users.map(u=>{
+        const utd=state.taskData[u.id]||{};
+        const cnt=TASK_DEFS.filter(t=>utd[t.id]?.done).length;
+        return `<tr>
+          <td><strong>${u.name}</strong></td>
+          <td style="font-size:0.76rem;color:var(--muted)">${u.inductionDate||'—'}</td>
+          ${TASK_DEFS.map(t=>{
+            const d=utd[t.id];
+            if(d?.done&&d?.isLate)return`<td style="text-align:center;font-size:0.68rem;line-height:1.3" title="${t.name}: Completed Late"><span style="color:var(--warn);font-size:1rem">✓</span><br><span style="color:var(--warn);font-weight:700">${d.selectedDate||''}</span></td>`;
+            if(d?.done)return`<td style="text-align:center;font-size:0.68rem;line-height:1.3" title="${t.name}: Done"><span style="color:var(--success);font-size:1rem">✓</span><br><span style="color:var(--muted)">${d.selectedDate||''}</span></td>`;
+            return`<td style="text-align:center" title="${t.name}: Pending"><span style="color:var(--mid)">○</span></td>`;
+          }).join('')}
+          <td><strong style="color:var(--red)">${cnt}/${TASK_DEFS.length}</strong></td>
+        </tr>`;
+      }).join('')}
+    </tbody>
+  </table></div>
+  <p style="font-size:0.7rem;color:var(--muted);margin-top:8px"><span style="color:var(--success)">✓</span> Done on time &nbsp;<span style="color:var(--warn)">✓</span> Completed late &nbsp;○ Pending · Date shown below tick · Hover column headers to see full task name</p>`;
+}
+
+function renderTimeline(){
+  const q=(document.getElementById('tl-search')?.value||'').toLowerCase();
+  const users=q?state.users.filter(u=>u.name.toLowerCase().includes(q)):state.users;
+  let html=`<div class="timeline-search"><input type="text" id="tl-search" placeholder="🔍 Search member name…" oninput="renderTimeline()" value="${q}"></div>`;
+  if(!users.length){html+=`<p class="text-muted" style="padding:16px">No members found.</p>`;document.getElementById('panel-timeline').innerHTML=html;return;}
+  users.forEach(u=>{
+    const utd=state.taskData[u.id]||{};
+    const done=TASK_DEFS.filter(t=>utd[t.id]?.done).length;
+    const late=TASK_DEFS.filter(t=>utd[t.id]?.done&&utd[t.id]?.isLate).length;
+    const pct=Math.round(done/TASK_DEFS.length*100);
+    html+=`<div class="tl-user-block" id="tl-${u.id}">
+      <div class="tl-user-header" onclick="this.parentElement.classList.toggle('open')">
+        <span class="tl-user-name">${u.name}</span>
+        <div class="tl-user-stats">
+          <span class="chip">${pct}% Complete</span>
+          <span class="tbl-badge" style="background:var(--success-bg);color:var(--success)">${done} Done</span>
+          ${late>0?`<span class="tbl-badge" style="background:var(--warn-bg);color:var(--warn)">${late} Late</span>`:''}
+          <span style="font-size:0.73rem;color:var(--muted)">Inducted: ${u.inductionDate||'—'}</span>
+        </div>
+        <span style="color:var(--muted);font-size:0.78rem">▼</span>
+      </div>
+      <div class="tl-body">
+        ${TASK_DEFS.map(t=>{
+          const d=utd[t.id];
+          const dotCls=d?.done?(d?.isLate?'late':'done'):'pending';
+          const due=u.inductionDate?new Date(new Date(u.inductionDate).getTime()+t.dueDays*86400000):null;
+          return `<div class="tl-item">
+            <div class="tl-dot ${dotCls}"></div>
+            <div class="tl-content">
+              <div class="tl-tid">${t.label} · Week ${t.week===0?'Open':t.week}</div>
+              <div class="tl-tname">${t.name}</div>
+              <div class="tl-tperson">👤 ${t.type==='dropdown'?(d?.selectedOption||t.options.join(' / ')):t.person}</div>
+              <div class="tl-meta">
+                ${d?.done?`✓ Completed${d.selectedDate?' on '+d.selectedDate:''} · Saved: ${d.timestamp||'—'}${d.isLate?' · <span style="color:var(--warn)">⚠ Late</span>':''}`:(due?`Due: ${fmtDate(due)}`:'—')}
+              </div>
+              ${d?.driveLink?`<div class="tl-drive">📎 ${d.driveLink}</div>`:''}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  });
+  document.getElementById('panel-timeline').innerHTML=html;
+}
+
+function renderMembersTable(){
+  let html=`<div class="admin-table-wrap"><table>
+  <thead><tr><th>#</th><th>Name</th><th>Login ID</th><th>Mentor</th><th>Induction Date</th><th>Tasks Done</th><th>Late Tasks</th><th>Progress</th></tr></thead><tbody>`;
+  state.users.forEach((u,i)=>{
+    const utd=state.taskData[u.id]||{};
+    const done=TASK_DEFS.filter(t=>utd[t.id]?.done).length;
+    const late=TASK_DEFS.filter(t=>utd[t.id]?.done&&utd[t.id]?.isLate).length;
+    const pct=Math.round(done/TASK_DEFS.length*100);
+    html+=`<tr>
+      <td style="color:var(--muted);font-size:0.75rem">${i+1}</td>
+      <td><strong>${u.name}</strong></td>
+      <td><code style="font-size:0.76rem;color:var(--red);background:var(--red-soft);padding:2px 7px;border-radius:4px">${u.id}</code></td>
+      <td style="font-size:0.8rem">${u.mentor||'—'}</td>
+      <td style="font-size:0.8rem">${u.inductionDate||'—'}</td>
+      <td><strong>${done}/${TASK_DEFS.length}</strong></td>
+      <td>${late>0?`<span style="color:var(--warn);font-weight:700">${late}</span>`:'<span style="color:var(--muted)">—</span>'}</td>
+      <td><div style="display:flex;align-items:center;gap:8px">
+        <div style="flex:1;height:5px;background:var(--light);border-radius:3px;min-width:80px">
+          <div style="width:${pct}%;height:100%;background:var(--red);border-radius:3px"></div>
+        </div>
+        <span style="font-size:0.73rem;color:var(--muted);width:30px">${pct}%</span>
+      </div></td>
+    </tr>`;
+  });
+  html+=`</tbody></table></div>`;
+  document.getElementById('panel-members').innerHTML=html;
+}
+
+function exportCSV(){
+  const cols=['Name','LoginID','InductionDate'];
+  TASK_DEFS.forEach(t=>cols.push(`${t.label}_TaskName`,`${t.label}_Person`,`${t.label}_Done`,`${t.label}_CompletedDate`,`${t.label}_SelectedPerson`,`${t.label}_Late`,`${t.label}_Timestamp`,`${t.label}_PhotoLink`));
+  cols.push('TotalDone','TotalLate');
+  const rows=[cols.join(',')];
+  state.users.forEach(u=>{
+    const utd=state.taskData[u.id]||{};
+    const row=[q(u.name),q(u.id),q(u.inductionDate||'')];
+    TASK_DEFS.forEach(t=>{
+      const d=utd[t.id]||{};
+      row.push(q(t.name),q(t.person),d.done?'Yes':'No',q(d.selectedDate||''),q(d.selectedOption||''),d.isLate?'Late':'',q(d.timestamp||''),q(d.driveLink||''));
+    });
+    row.push(TASK_DEFS.filter(t=>utd[t.id]?.done).length,TASK_DEFS.filter(t=>utd[t.id]?.isLate).length);
+    rows.push(row.join(','));
+  });
+  const blob=new Blob([rows.join('\n')],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`BNI_Futurz_Passport_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  toast('CSV downloaded!','success');
+}
+function q(v){return`"${String(v).replace(/"/g,'""')}"`;} 
+
+function fmtDate(d){if(!d)return'—';return new Date(d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
+function toast(msg,type=''){
+  const w=document.getElementById('toast-wrap');
+  const t=document.createElement('div');
+  t.className=`toast ${type}`;t.textContent=msg;
+  w.appendChild(t);setTimeout(()=>t.remove(),3500);
+}
+
+async function syncFromSheet(){
+  if(!SHEET_API_URL)return;
+  try{
+    const r=await fetch(SHEET_API_URL+'?action=getAll');
+    const data=await r.json();
+    if(data.users){state.users=data.users;saveUsers();}
+    if(data.tasks){state.taskData=data.tasks;saveTaskData();}
+  }catch(e){console.warn('Sheet sync failed, using local storage.');}
+}
+
+(async function init(){loadStorage();await syncFromSheet();})();
+</script>
+
+<!--
+=======================================================================
+GOOGLE APPS SCRIPT SETUP
+=======================================================================
+1. Create Google Sheet with 2 tabs:
+
+   "Users" tab — 5 columns (exactly these headers in row 1):
+     First_Name | Middle_Name | Last_Name | Induction_Date | Mentor
+
+   "Tasks" tab — 9 columns (exactly these headers in row 1):
+     UserID | TaskID | Done | SelectedDate | SelectedOption | IsLate | SubmittedAt | Timestamp | DriveLink
+
+   NOTE: First_Name is used as the Login ID. It must be unique per member.
+   NOTE: Mentor column = name of the assigned mentor for that member.
+   NOTE: Share the sheet with futurzbni@gmail.com as Editor.
+
+2. Extensions → Apps Script → paste this code:
+
+function doGet(e){
+  if(e.parameter.action==='getAll'){
+    const ss=SpreadsheetApp.getActiveSpreadsheet();
+    const uRows=ss.getSheetByName('Users').getDataRange().getValues().slice(1);
+    const users=uRows.filter(r=>r[0]).map(r=>{
+      const firstName=String(r[0]).trim();
+      const middleName=String(r[1]||'').trim();
+      const lastName=String(r[2]||'').trim();
+      const fullName=[firstName,middleName,lastName].filter(Boolean).join(' ');
+      const inductionDate=r[3]?Utilities.formatDate(new Date(r[3]),Session.getScriptTimeZone(),'yyyy-MM-dd'):'';
+      const mentor=String(r[4]||'').trim();
+      return {id:firstName, name:fullName, inductionDate:inductionDate, mentor:mentor};
+    });
+    const tRows=ss.getSheetByName('Tasks').getDataRange().getValues().slice(1);
+    const tasks={};
+    tRows.filter(r=>r[0]).forEach(r=>{
+      if(!tasks[r[0]])tasks[r[0]]={};
+      tasks[r[0]][r[1]]={done:r[2]==='Yes',selectedDate:r[3]||'',selectedOption:r[4]||'',isLate:r[5]==='Late',submittedAt:r[6]||'',timestamp:r[7]||'',driveLink:r[8]||''};
+    });
+    return ContentService.createTextOutput(JSON.stringify({users,tasks})).setMimeType(ContentService.MimeType.JSON);
+  }
+  return ContentService.createTextOutput('{}').setMimeType(ContentService.MimeType.JSON);
+}
+function doPost(e){
+  const p=JSON.parse(e.postData.contents);
+  if(p.action==='uploadPhoto'){
+    const folder=getOrCreateFolder('BNI Futurz Passport Photos');
+    const blob=Utilities.newBlob(Utilities.base64Decode(p.base64Data),p.mimeType,p.fileName);
+    const file=folder.createFile(blob);
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK,DriveApp.Permission.VIEW);
+    const url='https://drive.google.com/file/d/'+file.getId()+'/view';
+    return ContentService.createTextOutput(JSON.stringify({url})).setMimeType(ContentService.MimeType.JSON);
+  }
+  if(p.action==='saveTask'){
+    const sheet=SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Tasks');
+    const d=p.data;
+    const rows=sheet.getDataRange().getValues();
+    let found=false;
+    for(let i=1;i<rows.length;i++){
+      if(rows[i][0]==p.userId&&rows[i][1]==p.taskId){
+        sheet.getRange(i+1,1,1,9).setValues([[p.userId,p.taskId,d.done?'Yes':'No',d.selectedDate,d.selectedOption,d.isLate?'Late':'',d.submittedAt,d.timestamp,d.driveLink]]);
+        found=true;break;
+      }
+    }
+    if(!found)sheet.appendRow([p.userId,p.taskId,d.done?'Yes':'No',d.selectedDate,d.selectedOption,d.isLate?'Late':'',d.submittedAt,d.timestamp,d.driveLink]);
+  }
+  return ContentService.createTextOutput('ok').setMimeType(ContentService.MimeType.TEXT);
+}
+
+function getOrCreateFolder(name){
+  const folders=DriveApp.getFoldersByName(name);
+  return folders.hasNext()?folders.next():DriveApp.createFolder(name);
+}
+
+3. Deploy → Web App → Execute as "Me" → Anyone can access
+4. Paste deployment URL into SHEET_API_URL at top of this file.
+5. Add members in Users sheet:
+   First_Name = login ID (e.g. Rahul)
+   Middle_Name = middle name (can be blank)
+   Last_Name = last name
+   Induction_Date = date in YYYY-MM-DD format
+   Mentor = assigned mentor name (e.g. Prafull Bothra)
+=======================================================================
+-->
+</body>
+</html>
